@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: node
+
+  template:
+    metadata:
+      labels:
+        app: node
+
+    spec:
+      containers:
+      - name: node-container
+        image: <ECR_IMAGE_URL>:latest
+        ports:
+        - containerPort: 3000
