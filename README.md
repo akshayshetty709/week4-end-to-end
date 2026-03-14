@@ -140,6 +140,108 @@ The application runs inside Kubernetes pods and is exposed via a **LoadBalancer 
 ---
 
 # 📊 Monitoring
+1️⃣ Connect to Your EKS Cluster
+
+First configure kubectl to access your EKS cluster.
+
+aws eks --region ap-south-1 update-kubeconfig --name my-cluster
+
+Check connection:
+
+kubectl get nodes
+
+If nodes appear → cluster is connected.
+
+2️⃣ Install Helm (if not installed)
+
+Helm is the package manager for Kubernetes.
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+Verify:
+
+helm version
+3️⃣ Add Prometheus Helm Repository
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+Update repo:
+
+helm repo update
+4️⃣ Create Monitoring Namespace
+kubectl create namespace monitoring
+5️⃣ Install Prometheus + Grafana Stack
+
+Install the monitoring stack:
+
+helm install monitoring prometheus-community/kube-prometheus-stack \
+--namespace monitoring
+
+This single command installs:
+
+Prometheus
+
+Grafana
+
+Alertmanager
+
+Node Exporter
+
+Kubernetes metrics
+
+All automatically configured.
+
+6️⃣ Check Monitoring Pods
+kubectl get pods -n monitoring
+
+You will see pods like:
+
+prometheus-monitoring
+grafana-monitoring
+alertmanager
+node-exporter
+7️⃣ Access Grafana Dashboard
+
+Check service:
+
+kubectl get svc -n monitoring
+
+Find Grafana service.
+
+Example:
+
+monitoring-grafana   ClusterIP
+
+Expose it:
+
+kubectl port-forward svc/monitoring-grafana 3000:80 -n monitoring
+
+Open browser:
+
+http://localhost:3000
+8️⃣ Get Grafana Login Password
+kubectl get secret monitoring-grafana \
+-n monitoring \
+-o jsonpath="{.data.admin-password}" | base64 --decode
+
+Login:
+
+Username: admin
+Password: (command output)
+9️⃣ What You Can Monitor
+
+Grafana will automatically show dashboards for:
+
+Kubernetes nodes
+
+CPU usage
+
+Memory usage
+
+Pod health
+
+Network usage
+
+Container metrics
 
 Application and cluster metrics are monitored using:
 
