@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+   AWS_REGION: ap-south-1
+   CLUSTER_NAME: node-app-cluster
+
 jobs:
   build-deploy:
 
@@ -40,7 +44,9 @@ jobs:
 
     - name: Update kubeconfig
       run: |
-        aws eks update-kubeconfig 
+        aws eks update-kubeconfig \
+        --region $AWS_REGION \
+        --name $CLUSTER_NAME
  
 
     - name: Deploy to EKS
