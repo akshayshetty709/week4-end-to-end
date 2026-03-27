@@ -23,7 +23,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Login to ECR
-      uses: aws-actions/amazo-ecr-login@v2
+      uses: aws-actions/amazon-ecr-login@v2
       run: |
         aws ecr get-login-password --region ap-south-1 | \
         docker login --username AWS \
