@@ -23,6 +23,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Login to ECR
+      uses: aws-actions/amazo-ecr-login@v2
       run: |
         aws ecr get-login-password --region ap-south-1 | \
         docker login --username AWS \
@@ -43,14 +44,4 @@ jobs:
     - name: Deploy to EKS
       run: |
         kubectl apply -f k8s/
-    - name: Send Email Notification
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "Deployment Successful 🚀"
-        body: "Your application has been successfully deployed to EKS cluster."
-        to: yourmail@gmail.com
-        from: GitHub Actions
+    
