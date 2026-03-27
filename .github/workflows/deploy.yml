@@ -32,11 +32,12 @@ jobs:
 
     - name: Tag Image
       run: |
-        docker tag node-app:latest <ECR_URL>/node-app:latest
+        docker tag node-app:latest ${{ secrets.ECR_URL }}/node-app:latest
 
     - name: Push Image
       run: |
-        docker push <ECR_URL>/node-app:latest
+        docker push ${{ secrets.ECR_URL }}/node-app:latest
+ 
 
     - name: Deploy to EKS
       run: |
