@@ -22,7 +22,7 @@ spec:
         effect: "NoSchedule"
       containers:
       - name: node-container
-        image: <ECR_IMAGE_URL>:latest
+        image: 751101364131.dkr.ecr.ap-south-1.amazonaws.com/node-app:latest
         ports:
         - containerPort: 3000
      
