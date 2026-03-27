@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 
 app.get("/", (req, res) => {
-  res.send("DevOps Final Project Deployed on AWS EKS 🚀");
+  res.send("DevOps Node app  Deployed on AWS EKS 🚀");
 });
 
 app.listen(PORT, () => {

@@ -20,3 +20,8 @@ spec:
         image: <ECR_IMAGE_URL>:latest
         ports:
         - containerPort: 3000
+      tolerations:
+      - key: "eks.amazonaws.com/compute-class"
+        operator: "Equal"
+        value: "general-purpose"
+        effect: "NoSchedule"
